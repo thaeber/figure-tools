@@ -1,0 +1,11 @@
+name: figure-tools
+channels:
+  - defaults
+dependencies:
+  - python
+  - poetry
+  - pip
+  - jupyter
+  - mypy
+  - pylint
+  - yapf

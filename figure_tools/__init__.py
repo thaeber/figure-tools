@@ -1,3 +1,6 @@
+# set package version
+__version__ = '0.1.1'
+
 import os
 from typing import Union
 from pathlib import Path

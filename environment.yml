@@ -1,11 +1,13 @@
 name: figure-tools
 channels:
   - defaults
+  - conda-forge
 dependencies:
   - python
-  - poetry
-  - pip
+  - bump2version
   - jupyter
   - mypy
+  - pip
+  - poetry
   - pylint
   - yapf

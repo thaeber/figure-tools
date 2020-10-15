@@ -32,4 +32,4 @@ jobs:
     - name: Test with pytest
       run: |
         conda install poetry
-        $CONDA/bin/poetry run pytest
+        poetry run pytest

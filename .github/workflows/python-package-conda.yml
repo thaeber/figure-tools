@@ -32,4 +32,4 @@ jobs:
     - name: Install package dependencies via poetry
       run: $CONDA/bin/poetry install
     - name: Test using pytest
-      run: $CONDA/bin/poetry install
+      run: $CONDA/bin/poetry pytest

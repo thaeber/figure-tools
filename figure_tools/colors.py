@@ -5,7 +5,7 @@
 #
 # For example: plt.plot(x, y, color='tab:lightblue')
 #
-from typing import OrderedDict
+from collections import OrderedDict
 import matplotlib.colors
 
 LIGHT_TABLEAU_COLORS = (

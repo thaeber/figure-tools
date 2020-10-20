@@ -1,5 +1,6 @@
 # type: ignore
 import pytest
+from pytest import approx
 
 from figure_tools import apply_style, create_figure, validate_size
 
@@ -31,33 +32,33 @@ def test_default_figure_size():
 def test_absolute_figure_size():
     apply_style()
     fig = create_figure(width=11, height=7)
-    assert fig.get_figwidth() == 11
-    assert fig.get_figheight() == 7
+    assert fig.get_figwidth() == approx(11, 0.01)
+    assert fig.get_figheight() == approx(7, 0.01)
 
 
 def test_scaled_figure_size():
     apply_style()
     fig = create_figure(width='2x', height='1.5x')
-    assert fig.get_figwidth() == 2 * _default_width
-    assert fig.get_figheight() == 1.5 * _default_height
+    assert fig.get_figwidth() == approx(2 * _default_width, 0.01)
+    assert fig.get_figheight() == approx(1.5 * _default_height, 0.01)
 
 
 def test_figure_size_with_units():
     apply_style()
     fig = create_figure(width='80mm', height='6cm')
-    assert fig.get_figwidth() == 80 / 25.4
-    assert fig.get_figheight() == 6 / 2.54
+    assert fig.get_figwidth() == approx(80 / 25.4, 0.01)
+    assert fig.get_figheight() == approx(6 / 2.54, 0.01)
 
 
 def test_aspect_ratio_with_default_width():
     apply_style()
     fig = create_figure(aspect_ratio=2.0)
-    assert fig.get_figwidth() == _default_width
-    assert fig.get_figheight() == 2 * _default_width
+    assert fig.get_figwidth() == approx(_default_width, 0.01)
+    assert fig.get_figheight() == approx(2 * _default_width, 0.01)
 
 
 def test_aspect_ratio_with_absolute_width():
     apply_style()
     fig = create_figure(width='120mm', aspect_ratio=0.5)
-    assert fig.get_figwidth() == 120 / 25.4
-    assert fig.get_figheight() == 0.5 * 120 / 25.4
+    assert fig.get_figwidth() == approx(120 / 25.4, 0.01)
+    assert fig.get_figheight() == approx(0.5 * 120 / 25.4, 0.01)

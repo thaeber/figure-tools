@@ -9,11 +9,6 @@ def test_unmodified_path():
     assert image_path('test/hallo.py') == Path('test/hallo.py')
 
 
-def test_env_image_path_wo_workspace():
-    os.environ['FIG_TOOLS_IMAGE_PATH'] = 'a/images'
-    assert image_path('a/b/c/d/test.py') == Path('a/images/test.py')
-
-
 def test_env_image_path_wo_workspace(monkeypatch):
     monkeypatch.setenv('FIG_TOOLS_IMAGE_PATH', 'a/images')
     assert image_path('a/b/c/d/test.py') == Path('a/images/test.py')

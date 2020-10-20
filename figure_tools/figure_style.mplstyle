@@ -3,6 +3,7 @@ figure.figsize: 3.15, 2.36    # typical size of a single column journal figure (
 figure.autolayout: False
 figure.dpi: 200
 figure.facecolor: white
+figure.edgecolor: black
 
 # font
 font.size : 8

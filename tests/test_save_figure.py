@@ -56,3 +56,16 @@ def test_save_figure_with_image_path_and_workspace(tmp_path: Path,
     # make sure the file exists
     assert (tmp_path / 'images/c/d' /
             filename.name).with_suffix('.png').exists()
+
+
+def test_add_commit_hash_as_annotation():
+
+    # create test figure
+    fig = create_figure(width='8cm', aspect_ratio=1)
+    x = np.linspace(0, 10, 100)
+    plt.plot(x, np.sin(x))
+    plt.title('test plot')
+    plt.tight_layout()
+
+    # save figure
+    save_figure('baseline/test.py')

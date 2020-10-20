@@ -8,4 +8,4 @@ import matplotlib.pyplot as plt
 
 from . import colors  # type: ignore
 from .figure import apply_style, create_figure, validate_size  # type: ignore
-from .save import save_figure, image_path
+from .save import save_figure

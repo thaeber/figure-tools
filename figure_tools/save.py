@@ -18,7 +18,7 @@ def save_figure(filename: Union[str, Path],
         figure = plt.gcf()
 
     # target filename
-    filename = image_path(filename)
+    filename = build_image_path(filename)
 
     # create target path
     filename.parent.mkdir(parents=True, exist_ok=True)
@@ -37,7 +37,7 @@ def save_figure(filename: Union[str, Path],
         figure.savefig(target, **kws)
 
 
-def image_path(filename: Union[str, Path]) -> Path:
+def build_image_path(filename: Union[str, Path]) -> Path:
 
     # make sure filename is of typ Path
     filename = Path(filename)

@@ -31,9 +31,9 @@ dependencies:
 
 ## Quickstart
 
-> We assume that all scripts for creating the figures are managed in
-> a git repository to help in research data management. The `git` executable
-> must be reachable through the `PATH` environment variable.
+> :exclamation: We assume that all scripts for creating the figures are managed in
+> a git repository to help in research data management. That is, the `git` 
+> executable must be reachable through the `PATH` environment variable.
 
 Creating and saving figures always follows the same workflow:
 
@@ -116,15 +116,15 @@ script-filename: create_quickstart_figure.py
             dpi: (600, 600)
 ```
 
-## Styling {#styling}
+## Styling
 
-> ... work in progress (see #6). Currently an internal style sheet is used.
+> :construction: ... work in progress (see #6). Currently an internal style sheet is used.
 
 Call `apply_style()` to set the matplotlib styling parameters to a common style that also includes a common base figure size for all figures in the project.
 
 ## Creating figures
 
-`create_figure()` is a convenience function for creating figures. Internally it is just a wrapper around the [`pyplot.figure()`](https://matplotlib.org/api/_as_gen/matplotlib.pyplot.figure.html?highlight=figure#matplotlib-pyplot-figure) function, but it simplifies the creation of figures with similar size constraints. For example, publications in scientific journals are often printed in two-columns. If the [style file](#styling) defines the with and height of a single-column wide figure then creating a double-column wide figure with the same height is as easy as calling:
+`create_figure()` is a convenience function for creating figures. Internally it is just a wrapper around the [`pyplot.figure()`](https://matplotlib.org/api/_as_gen/matplotlib.pyplot.figure.html?highlight=figure#matplotlib-pyplot-figure) function, but it simplifies the creation of figures with similar size constraints. For example, publications in scientific journals are often printed in two-columns. If the style file defines the with and height of a single-column wide figure then creating a double-column wide figure with the same height is as easy as calling:
 
 ```python
 fig = create_figure(width='2x')
@@ -153,4 +153,38 @@ fig = create_figure(width='3inch', height='2inch')
 ```
 
 `float` values passed to the `width` and `height` parameters are passed directly to the `figsize` parameter of the `pyplot.figure()` call, thus representing the size of the figure in inches, the internal length unit of matplotlib.
+
+## Saving figures
+
+Figures are saved using the `save_figure` function:
+
+```python
+def save_figure(filename: Union[str, Path],
+                figure: Union[Figure, None] = None,
+                formats: Iterable[str] = ('.png', ),
+                **kws)
+```
+
+The first parameter should be the full path of the python script used to generate the figure. Within a python script it is recommended to use the predefined `__file__` variable, which the imports populates with the full path and name of the current file. Internally the `save_figure` function replaces the '.py' suffix with the appropriate suffix for the requested image format. Thus, `save_figure` is most commonly called as:
+
+```python
+save_figure(__file__)
+```
+
+Note that this only works within a "normal" python script where the `__file__` variable
+has been sensibly initialized. In jupyter notebooks or when the python module (file)
+is loaded from a database, the value of `__file__` is undefined. Alternatively, the `filename` parameter can be set to the path and filename under which the image will be stored.
+
+> :warning: When using a filename other than that of the script that generated the figure and that is under version control, the automatic assignment of git commit hashes and blame metadata can lead meaningless results.
+
+The second parameter is a reference to the figure that should be saved. If omitted or set to None, the function uses the current figure (see [pyplot.gcf()](https://matplotlib.org/api/_as_gen/matplotlib.pyplot.gcf.html?highlight=gcf#matplotlib-pyplot-gcf)).
+
+`formats` is an iterable sequence of string values, each representing an extension of a image format supported by `matplotlib`. The `save_figure` function will iterate over the sequence and generate an image for each specified format. By default only PNG images are generated.
+
+All additional key word arguments are passed directly to the [`Figure.savefig`](https://matplotlib.org/api/_as_gen/matplotlib.figure.Figure.html?highlight=savefig#matplotlib.figure.Figure.savefig) call.
+
+### Image path
+
+With the recommended call of `save_figure(__file__)` the image is created in the same directory where the script is located in the filesystem. This behavior is often undesirable, especially if the scripts are under version control and if the binary files should not be checked in, to avoid an unnecessary inflation of the repository size. Two environment variables can be used to modify the storage location for all scripts.
+
 

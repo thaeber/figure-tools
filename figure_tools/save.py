@@ -65,7 +65,7 @@ def save_figure(filename: Union[str, Path],
         target = filename.with_suffix(fmt)
 
         print(f'Saving: {target}')
-        print(kws)
+        # print(kws)
         figure.savefig(target, **kws)
 
 

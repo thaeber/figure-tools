@@ -171,11 +171,9 @@ The first parameter should be the full path of the python script used to generat
 save_figure(__file__)
 ```
 
-Note that this only works within a "normal" python script where the `__file__` variable
-has been sensibly initialized. In jupyter notebooks or when the python module (file)
-is loaded from a database, the value of `__file__` is undefined. Alternatively, the `filename` parameter can be set to the path and filename under which the image will be stored.
+Note that this only works within a "normal" python script where the `__file__` variable has been sensibly initialized. In jupyter notebooks or when the python module (file) is loaded from a database, the value of `__file__` is undefined. Alternatively, the `filename` parameter can be set to the path and filename under which the image will be stored.
 
-> :warning: When using a filename other than that of the script that generated the figure and that is under version control, the automatic assignment of git commit hashes and blame metadata can lead meaningless results.
+> :warning: When using a filename other than that of the script that generated the figure and that is under version control, the automatic assignment of git commit hashes and blame metadata can lead to meaningless results.
 
 The second parameter is a reference to the figure that should be saved. If omitted or set to None, the function uses the current figure (see [pyplot.gcf()](https://matplotlib.org/api/_as_gen/matplotlib.pyplot.gcf.html?highlight=gcf#matplotlib-pyplot-gcf)).
 
@@ -185,6 +183,21 @@ All additional key word arguments are passed directly to the [`Figure.savefig`](
 
 ### Image path
 
-With the recommended call of `save_figure(__file__)` the image is created in the same directory where the script is located in the filesystem. This behavior is often undesirable, especially if the scripts are under version control and if the binary files should not be checked in, to avoid an unnecessary inflation of the repository size. Two environment variables can be used to modify the storage location for all scripts.
+With the recommended call of `save_figure(__file__)` the image is created in the same directory where the script is located in the filesystem. This behavior is often undesirable, especially if the scripts are under version control and if the binary files should not be checked in, to avoid an unnecessary inflation of the repository size. Two environment variables can be used to modify the storage location for all scripts in the repo.
 
+- **FIG_TOOLS_IMAGE_PATH**: If set then `save_figure` stores all images in that location, using the last path component of the `filename` as the name of the image file. Lets assume that `FIG_TOOLS_IMAGE_PATH="repo/images"`. Calling `save_figure('repo/a/b/c/d/script.py')` will create an image at `repo/images/script.png`. In that case the path information is stripped from the filename and all images will be stored side-by-side in `repo/images`.
 
+- **FIG_TOOLS_WORKSPACE_ROOT**: Sometimes it may be desirable to use the folder structure of the script files partially or completely for the images, too. If `FIG_TOOLS_WORKSPACE_ROOT` is set to a parent path of the script files, then first the relative path of the script to the root directory is determined and stored accordingly under `FIG_TOOLS_IMAGE_PATH`. For example, setting the environment variables to
+
+  ```env
+  FIG_TOOLS_IMAGE_PATH="repo/images"
+  FIG_TOOLS_WORKSPACE_ROOT="repo/a/b"
+  ```
+
+  and calling
+
+  ```python
+  save_figure('repo/a/b/c/d/script.py')
+  ```
+
+  will create the image at `repo/images/c/d/script.png`.

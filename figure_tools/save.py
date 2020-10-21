@@ -1,13 +1,15 @@
 import os
+import datetime
 import subprocess
-from pathlib import Path
-from typing import Iterable, Union
 import warnings
+from pathlib import Path
+from typing import Dict, Iterable, Union
 
 import matplotlib
+import matplotlib.colors
 import matplotlib.pyplot as plt
 from matplotlib.figure import Figure
-import matplotlib.colors
+from PIL import Image
 
 from . import _config as cfg
 
@@ -24,14 +26,23 @@ def save_figure(filename: Union[str, Path],
     if figure is None:
         figure = plt.gcf()
 
+    # add git commit hash to figure metadata
+    git_commit = _get_git_commit_hash()
+    metadata = kws.setdefault('metadata', {})
+    metadata.update({
+        'created': f'{datetime.datetime.now(datetime.timezone.utc)}',
+        'git-commit': f'{git_commit}',
+        'script-filename': filename.name,
+        'git-blame': f'{_get_git_blame(filename)}',
+    })
+
     # add git commit hash as annotation
     if not cfg.do_not_add_commit_hash_annotation:
         # get commit hash
-        text = _get_commit_hash()
-        if text is None:
+        if git_commit is None:
             warnings.warn('Could not obtain commit hash.')
         else:
-            _add_commit_hash_annotation(text)
+            _add_commit_hash_annotation(git_commit)
 
     # add filename annotation
     if not cfg.do_not_add_filename_annotation:
@@ -43,8 +54,9 @@ def save_figure(filename: Union[str, Path],
     # create target path
     filename.parent.mkdir(parents=True, exist_ok=True)
 
-    # merge parameters
-    kws = {**dict(dpi=600, transparent=False), **kws}
+    # add default keyword arguments
+    kws.setdefault('dpi', 600)
+    kws.setdefault('transparent', False)
 
     # save figure
     for fmt in formats:
@@ -55,6 +67,34 @@ def save_figure(filename: Union[str, Path],
         print(f'Saving: {target}')
         print(kws)
         figure.savefig(target, **kws)
+
+
+def load_image_metadata(filename: Union[str, Path]) -> Dict[str, str]:
+
+    filename = Path(filename)
+
+    if filename.suffix == '.py':
+        filename = filename.with_suffix('.png')
+
+    img = Image.open(filename.resolve())
+    return img.info
+
+
+def print_image_metadata(filename):
+    info = load_image_metadata(filename)
+    fmt = '{0:>16} {1}'
+    for key in info.keys():
+        if key in ['created', 'git-commit', 'script-filename']:
+            print(fmt.format(key + ':', info[key]))
+        elif key == 'git-blame':
+            lines = info['git-blame'].splitlines()
+            if len(lines) > 0:
+                print(fmt.format(key + ':', lines[0]))
+            if len(lines) > 1:
+                for line in lines:
+                    print(fmt.format('', line))
+        else:
+            print(fmt.format(key + ':', info[key]))
 
 
 def build_image_path(filename: Union[str, Path]) -> Path:
@@ -114,10 +154,20 @@ def _add_annotation(text: str, loc: str):
     plt.annotate(text, xy, **kws)
 
 
-def _get_commit_hash() -> Union[str, None]:
+def _get_git_commit_hash() -> Union[str, None]:
     try:
         label = subprocess.check_output(
             ["git", "describe", "--always", "--dirty"], text=True).strip()
+        return str(label)
+    except:
+        return None
+
+
+def _get_git_blame(filename: Path):
+    try:
+        label = subprocess.check_output(
+            ["git", "blame", "-M",
+             str(filename.resolve())], text=True)
         return str(label)
     except:
         return None

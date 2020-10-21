@@ -1,9 +1,12 @@
+import random
+import string
 from pathlib import Path
 
 import matplotlib.pyplot as plt
 import numpy as np
 import pytest
-from figure_tools import create_figure, save_figure
+from figure_tools import create_figure, save_figure, load_image_metadata
+import figure_tools.save as fts
 
 
 def test_save_current_figure(tmp_path: Path):
@@ -58,7 +61,7 @@ def test_save_figure_with_image_path_and_workspace(tmp_path: Path,
             filename.name).with_suffix('.png').exists()
 
 
-def test_add_commit_hash_as_annotation():
+def test_add_commit_metadata(tmp_path: Path):
 
     # create test figure
     fig = create_figure(width='8cm', aspect_ratio=1)
@@ -68,4 +71,10 @@ def test_add_commit_hash_as_annotation():
     plt.tight_layout()
 
     # save figure
-    save_figure('baseline/test.py')
+    filename = tmp_path / Path(__file__).name
+    save_figure(filename)
+
+    # load image metdata and compare
+    info = load_image_metadata(filename.with_suffix('.png'))
+    assert info['script-filename'] == filename.name
+    assert info['git-commit'] == fts._get_git_commit_hash()

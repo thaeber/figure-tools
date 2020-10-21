@@ -132,7 +132,7 @@ fig = create_figure(width='2x')
 
 There is no need to remember the physical size of a double-colum wide figure, if the base size is configured appropriately. The width parameter can be any multiple of the base figure width, followed by an 'x', e.g. '1.25x'. The figure height can be specified in the same way using the `height` parameter. 
 
-`create_figure` also provides an `aspect_ratio` parameter to create figures with a given width and aspect ratio (height/width). The `aspect_ratio` is ignored if the `height` parameter is present. To create a single-column wide figure with an aspect ratio of $1.0$ call:
+`create_figure` also provides an `aspect_ratio` parameter to create figures with a given width and aspect ratio (height/width). The `aspect_ratio` is ignored if the `height` parameter is present. To create a single-column wide figure with an aspect ratio of 1.0 call:
 
 ```python
 fig = create_figure(width='1x', aspect_ratio=1.0)
@@ -165,7 +165,7 @@ def save_figure(filename: Union[str, Path],
                 **kws)
 ```
 
-The first parameter should be the full path of the python script used to generate the figure. Within a python script it is recommended to use the predefined `__file__` variable, which the imports populates with the full path and name of the current file. Internally the `save_figure` function replaces the '.py' suffix with the appropriate suffix for the requested image format. Thus, `save_figure` is most commonly called as:
+The first parameter should be the full path of the python script used to generate the figure. Within a python script it is recommended to use the predefined `__file__` variable, which the imports system populates with the full path and name of the current file. Internally the `save_figure` function replaces the '.py' suffix with the appropriate suffix for the requested image format. Thus, `save_figure` is most commonly called as:
 
 ```python
 save_figure(__file__)
@@ -177,17 +177,17 @@ Note that this only works within a "normal" python script where the `__file__` v
 
 The second parameter is a reference to the figure that should be saved. If omitted or set to None, the function uses the current figure (see [pyplot.gcf()](https://matplotlib.org/api/_as_gen/matplotlib.pyplot.gcf.html?highlight=gcf#matplotlib-pyplot-gcf)).
 
-`formats` is an iterable sequence of string values, each representing an extension of a image format supported by `matplotlib`. The `save_figure` function will iterate over the sequence and generate an image for each specified format. By default only PNG images are generated.
+`formats` is an iterable sequence of string values, each representing the file extension of a image format supported by `matplotlib`. The `save_figure` function will iterate over the sequence and generate an image for each specified format. By default only PNG images are generated.
 
 All additional key word arguments are passed directly to the [`Figure.savefig`](https://matplotlib.org/api/_as_gen/matplotlib.figure.Figure.html?highlight=savefig#matplotlib.figure.Figure.savefig) call.
 
 ### Image path
 
-With the recommended call of `save_figure(__file__)` the image is created in the same directory where the script is located in the filesystem. This behavior is often undesirable, especially if the scripts are under version control and if the binary files should not be checked in, to avoid an unnecessary inflation of the repository size. Two environment variables can be used to modify the storage location for all scripts in the repo.
+With the recommended call of `save_figure(__file__)` the image is created in the same directory where the script is located in the filesystem. This behavior is often undesirable, especially if the scripts are under version control and if the binary image files should not be checked in to avoid an unnecessary inflation of the repository size. Two environment variables can be used to modify the storage location for all scripts.
 
-- **FIG_TOOLS_IMAGE_PATH**: If set then `save_figure` stores all images in that location, using the last path component of the `filename` as the name of the image file. Lets assume that `FIG_TOOLS_IMAGE_PATH="repo/images"`. Calling `save_figure('repo/a/b/c/d/script.py')` will create an image at `repo/images/script.png`. In that case the path information is stripped from the filename and all images will be stored side-by-side in `repo/images`.
+- **FIG_TOOLS_IMAGE_PATH**: If set then `save_figure` stores all images in that location, using the last path component of the `filename` as the name of the image file. Lets assume that `FIG_TOOLS_IMAGE_PATH="repo/images"` is set. Calling `save_figure('repo/a/b/c/d/script.py')` will create an image at `repo/images/script.png`. The path information is stripped from the filename and all images will be stored side-by-side in `repo/images`.
 
-- **FIG_TOOLS_WORKSPACE_ROOT**: Sometimes it may be desirable to use the folder structure of the script files partially or completely for the images, too. If `FIG_TOOLS_WORKSPACE_ROOT` is set to a parent path of the script files, then first the relative path of the script to the root directory is determined and stored accordingly under `FIG_TOOLS_IMAGE_PATH`. For example, setting the environment variables to
+- **FIG_TOOLS_WORKSPACE_ROOT**: Sometimes it may be desirable to use the folder structure of the script files partially or completely for the images, too. If `FIG_TOOLS_WORKSPACE_ROOT` is set to a parent path of the script files, then first the relative path of the script to the root directory is determined and then the image is stored with the same relative path under `FIG_TOOLS_IMAGE_PATH`. For example, setting the environment variables to
 
   ```env
   FIG_TOOLS_IMAGE_PATH="repo/images"
@@ -200,4 +200,4 @@ With the recommended call of `save_figure(__file__)` the image is created in the
   save_figure('repo/a/b/c/d/script.py')
   ```
 
-  will create the image at `repo/images/c/d/script.png`.
+  will create the image at `repo/images/c/d/script.png`. `FIG_TOOLS_WORKSPACE` has no effect if `FIG_TOOLS_IMAGE_PATH` is not set.

@@ -1,7 +1,7 @@
 #%%
 import numpy as np
 import matplotlib.pyplot as plt
-from figure_tools import apply_style, create_figure, save_figure
+from figure_tools import apply_style, create_figure, save_figure, print_image_metadata
 
 # %%
 apply_style()
@@ -26,5 +26,8 @@ plt.tight_layout()
 # Save the current figure in "png" format. The image will have the same
 # name as the python script, except for another suffix.
 save_figure(__file__)
+
+# %%
+print_image_metadata(__file__)
 
 # %%

@@ -41,15 +41,18 @@ from figure_tools import apply_style, create_figure, save_figure
 # figure size might be valid for a single column figure in a journal.
 apply_style()
 
-# Create a new figure that is two columns wide (2x) and has 
+# Create a new figure that is one column wide (1x) and has 
 # the default height.
-fig = create_figure(width='2x')
+fig = create_figure(width='1x')
 
 # ... put your own plotting logic here
 # ...
 # ...
-x = np.linspace(0, 10, 50)
-plt.plot(x, np.sin(x))
+x = np.linspace(0, 10, 100)
+plt.plot(x, np.sin(x), '-')
+plt.plot(x, np.sin(2.3 * x), '-')
+plt.xlabel('$t$ / s')
+plt.ylabel('amplitude')
 # ...
 # ...
 # ...
@@ -62,3 +65,4 @@ save_figure(__file__)
 ```
 
 This will create the following figure:
+

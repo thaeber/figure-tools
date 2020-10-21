@@ -7,13 +7,16 @@ from figure_tools import apply_style, create_figure, save_figure
 apply_style()
 
 # %%
-fig = create_figure(width='2x')
+fig = create_figure(width='1x')
 
 # ... put your own plotting logic here
 # ...
 # ...
-x = np.linspace(0, 10, 50)
-plt.plot(x, np.sin(x))
+x = np.linspace(0, 10, 100)
+plt.plot(x, np.sin(x), '-')
+plt.plot(x, np.sin(2.3 * x), '-')
+plt.xlabel('$t$ / s')
+plt.ylabel('amplitude')
 # ...
 # ...
 # ...

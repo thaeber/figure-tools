@@ -10,6 +10,7 @@ matplotlib = ">=3.1"
 
 [tool.poetry.dev-dependencies]
 pytest = "^5.2"
+pytest-mpl = "^0.11"
 bump2version = "^1.0.1"
 mypy = "^0.790"
 pylint = "^2.6.0"

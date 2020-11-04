@@ -17,6 +17,7 @@ from . import _config as cfg
 def save_figure(filename: Union[str, Path],
                 figure: Union[Figure, None] = None,
                 formats: Iterable[str] = ('.png', ),
+                index: str = None,
                 **kws):
 
     # make sure filename is of type Path
@@ -62,6 +63,8 @@ def save_figure(filename: Union[str, Path],
     for fmt in formats:
         if not fmt.startswith('.'):
             fmt = '.' + fmt
+        if index is not None:
+            fmt = '.' + index + fmt
         target = filename.with_suffix(fmt)
 
         print(f'Saving: {target}')

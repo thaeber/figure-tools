@@ -64,7 +64,9 @@ def save_figure(filename: Union[str, Path],
         if not fmt.startswith('.'):
             fmt = '.' + fmt
         if index is not None:
-            fmt = '.' + index + fmt
+            if not index.startswith('.'):
+                index = '.' + index
+            fmt = index + fmt
         target = filename.with_suffix(fmt)
 
         print(f'Saving: {target}')

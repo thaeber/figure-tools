@@ -4,6 +4,7 @@ import subprocess
 import warnings
 from pathlib import Path
 from typing import Dict, Iterable, Union
+from operator import itemgetter
 
 import matplotlib
 import matplotlib.colors
@@ -43,11 +44,11 @@ def save_figure(filename: Union[str, Path],
         if git_commit is None:
             warnings.warn('Could not obtain commit hash.')
         else:
-            _add_commit_hash_annotation(git_commit)
+            _add_commit_hash_annotation(figure, git_commit)
 
     # add filename annotation
     if not cfg.do_not_add_filename_annotation:
-        _add_filename_annotation(filename)
+        _add_filename_annotation(figure, filename)
 
     # target filename
     filename = build_image_path(filename)
@@ -124,39 +125,63 @@ def build_image_path(filename: Union[str, Path]) -> Path:
                 workspace_root.resolve())
 
 
-def _add_commit_hash_annotation(text: str):
-    _add_annotation(f'git:{text}', loc='upper left')
+def _add_commit_hash_annotation(figure: Figure, text: str):
+    _add_annotation(figure, f'git:{text}', loc='upper left')
 
 
-def _add_filename_annotation(filename: Path):
-    _add_annotation(filename.name, loc='upper right')
+def _add_filename_annotation(figure: Figure, filename: Path):
+    _add_annotation(figure, filename.name, loc='upper right')
 
 
-def _add_annotation(text: str, loc: str):
-    kws = dict(
-        xycoords='figure fraction',
-        textcoords='offset points',
-        fontsize=0.6 * matplotlib.rcParams['font.size'],
-        # color=matplotlib.colors.to_rgba(figure.get_edgecolor(), 0.5),
-        color=matplotlib.colors.to_rgba('black', 0.5),
-        annotation_clip=False)
+def _add_annotation(figure: Figure, text: str, loc: str):
 
-    # default position
+    # get axes
+    if len(figure.axes) == 1:
+        ax = figure.axes[0]
+    else:
+        if loc == 'upper left':
+            # get upper left axis
+            axes = [(a, a.get_position().xmin, a.get_position().ymax)
+                    for a in figure.axes]
+            axes = sorted(axes, key=itemgetter(2),
+                          reverse=True)  # sort by ymax
+            axes = sorted(axes, key=itemgetter(1))  # sort by xmin
+            ax = axes[0][0]
+        elif loc == 'upper right':
+            # get upper right axis
+            axes = [(a, a.get_position().xmax, a.get_position().ymax)
+                    for a in figure.axes]
+            axes = sorted(axes, key=itemgetter(2),
+                          reverse=True)  # sort by ymax
+            axes = sorted(axes, key=itemgetter(1),
+                          reverse=True)  # sort by xmax
+            ax = axes[0][0]
+        else:
+            raise ValueError(
+                '"loc" must be one of "upper left" or "upper right"')
+
+    kws = dict(xycoords='axes fraction',
+               textcoords='offset points',
+               fontsize=0.6 * matplotlib.rcParams['font.size'],
+               color=matplotlib.colors.to_rgba('black', 0.5),
+               annotation_clip=False)
+
+    # position
     if loc == 'upper left':
         xy = (0.0, 1.0)
-        kws.update(ha='left', va='top', xytext=(2, -2))
+        kws.update(ha='left', va='bottom', xytext=(1, 1))
     elif loc == 'upper right':
         xy = (1.0, 1.0)
         kws.update(
             ha='right',
-            va='top',
-            xytext=(-2, -2),
+            va='bottom',
+            xytext=(-1, 1),
         )
     else:
         raise ValueError('"loc" must be one of "upper left" or "upper right"')
 
     # create annotation
-    plt.annotate(text, xy, **kws)
+    ax.annotate(text, xy, **kws)
 
 
 def _get_git_commit_hash() -> Union[str, None]:

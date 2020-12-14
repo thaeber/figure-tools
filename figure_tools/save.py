@@ -130,7 +130,12 @@ def _add_commit_hash_annotation(figure: Figure, text: str):
 
 
 def _add_filename_annotation(figure: Figure, filename: Path):
-    _add_annotation(figure, filename.name, loc='upper right')
+    workspace_root = cfg.get_workspace_root()
+    if workspace_root:
+        s = str(filename.relative_to(workspace_root))
+    else:
+        s = filename.name
+    _add_annotation(figure, s, loc='upper right')
 
 
 def _add_annotation(figure: Figure, text: str, loc: str):

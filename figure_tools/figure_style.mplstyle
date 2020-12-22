@@ -126,3 +126,6 @@ boxplot.meanprops.markeredgecolor : C2
 boxplot.meanprops.markersize      :  6
 boxplot.meanprops.linestyle       : --
 boxplot.meanprops.linewidth       : 0.75
+
+# toolkits
+mpl_toolkits.legacy_colorbar: False

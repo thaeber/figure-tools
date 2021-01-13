@@ -15,3 +15,7 @@ def test_light_tableau_colors():
     assert matplotlib.colors.is_color_like('tab:lightgray')
     assert matplotlib.colors.is_color_like('tab:lightolive')
     assert matplotlib.colors.is_color_like('tab:lightcyan')
+
+
+def test_tab20_shaded_colors():
+    assert matplotlib.colors.is_color_like('tab20:indigo2')

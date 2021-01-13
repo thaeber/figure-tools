@@ -22,7 +22,7 @@ def save_figure(filename: Union[str, Path],
                 **kws):
 
     # make sure filename is of type Path
-    filename = Path(filename)
+    filename = Path(filename).resolve()
 
     # if figure is None, get default figure
     if figure is None:

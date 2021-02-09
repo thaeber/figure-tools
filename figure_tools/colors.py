@@ -78,3 +78,24 @@ TAB20_SHADED_COLORS = OrderedDict(
 
 # add light tableau colors to the list o named matplotlib colors
 matplotlib.colors._colors_full_map.update(TAB20_SHADED_COLORS)
+
+
+#
+# Convenience methods for shading or tinting a base color.
+#
+def tint(color, factor=0.3, iterations=1):
+    if iterations == 0:
+        return color
+    else:
+        rgb = np.array(matplotlib.colors.to_rgb(color))
+        color = rgb + factor * (1 - rgb)
+        return tint(color, factor, iterations - 1)
+
+
+def shade(color, factor=0.7, iterations=1):
+    if iterations == 0:
+        return color
+    else:
+        rgb = np.array(matplotlib.colors.to_rgb(color))
+        color = rgb * factor
+        return shade(color, factor, iterations - 1)

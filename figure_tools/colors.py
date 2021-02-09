@@ -7,6 +7,7 @@
 #
 from collections import OrderedDict
 import matplotlib.colors
+import numpy as np
 
 LIGHT_TABLEAU_COLORS = (
     ('blue', '#aec7e8'),
@@ -25,5 +26,26 @@ LIGHT_TABLEAU_COLORS = (
 LIGHT_TABLEAU_COLORS = OrderedDict(
     ('tab:light' + name, value) for name, value in LIGHT_TABLEAU_COLORS)
 
-# add light tablue colors to the list o named matplotlib colors
+# add light tableau colors to the list o named matplotlib colors
 matplotlib.colors._colors_full_map.update(LIGHT_TABLEAU_COLORS)
+
+
+#
+# Convenience methods for shading or tinting a base color.
+#
+def tint(color, factor=0.3, iterations=1):
+    if iterations == 0:
+        return color
+    else:
+        rgb = np.array(matplotlib.colors.to_rgb(color))
+        color = rgb + factor * (1 - rgb)
+        return tint(color, factor, iterations - 1)
+
+
+def shade(color, factor=0.7, iterations=1):
+    if iterations == 0:
+        return color
+    else:
+        rgb = np.array(matplotlib.colors.to_rgb(color))
+        color = rgb * factor
+        return shade(color, factor, iterations - 1)

@@ -87,8 +87,11 @@ def tint(color, factor=0.3, iterations=1):
     if iterations == 0:
         return color
     else:
-        rgb = np.array(matplotlib.colors.to_rgb(color))
-        color = rgb + factor * (1 - rgb)
+        # rgb = np.array(matplotlib.colors.to_rgb(color))
+        # color = rgb + factor * (1 - rgb)
+
+        rgb = matplotlib.colors.to_rgb(color)
+        color = [x + factor * (1 - x) for x in rgb]
         return tint(color, factor, iterations - 1)
 
 
@@ -96,6 +99,6 @@ def shade(color, factor=0.7, iterations=1):
     if iterations == 0:
         return color
     else:
-        rgb = np.array(matplotlib.colors.to_rgb(color))
-        color = rgb * factor
+        rgb = matplotlib.colors.to_rgb(color)
+        color = [x * factor for x in rgb]
         return shade(color, factor, iterations - 1)

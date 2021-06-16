@@ -8,12 +8,15 @@ import matplotlib.pyplot as plt
 from matplotlib.figure import Figure
 
 
-def apply_style():
+def apply_style(*additional_styles):
     """
     Applies a commong style to all figures created after calling this function.
     """
     plt.style.use(
         os.path.join(os.path.dirname(__file__), './figure_style.mplstyle'))
+
+    for style in additional_styles:
+        plt.style.use(style)
 
 
 def _validate_float(s: Union[str, float]) -> float:

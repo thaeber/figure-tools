@@ -1,5 +1,5 @@
 # set package version
-__version__ = '0.4.0-dev0'
+__version__ = '0.4.1-dev0'
 
 from typing import Union
 from pathlib import Path

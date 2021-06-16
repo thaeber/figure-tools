@@ -2,9 +2,13 @@ import os
 from pathlib import Path
 import subprocess
 from typing import Union
+from environs import Env
 
-do_not_add_commit_hash_annotation = False
-do_not_add_filename_annotation = False
+_env = Env()
+_env.read_env()
+
+hide_commit_hash_annotation = _env.bool('FIG_TOOLS_HIDE_COMMIT_HASH', False)
+hide_filename_annotation = _env.bool('FIG_TOOLS_HIDE_FILENAME', False)
 
 
 def get_image_path() -> Union[Path, None]:

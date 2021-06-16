@@ -7,6 +7,7 @@ authors = ["thaeber"]
 [tool.poetry.dependencies]
 python = ">=3.7"
 matplotlib = ">=3.1"
+environs = "^9.3.2"
 
 [tool.poetry.dev-dependencies]
 pytest = "^5.2"

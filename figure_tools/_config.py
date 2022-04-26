@@ -7,8 +7,9 @@ from environs import Env
 _env = Env()
 _env.read_env()
 
-hide_commit_hash_annotation = _env.bool('FIG_TOOLS_HIDE_COMMIT_HASH', False)
-hide_filename_annotation = _env.bool('FIG_TOOLS_HIDE_FILENAME', False)
+hide_commit_hash_annotation = lambda: _env.bool('FIG_TOOLS_HIDE_COMMIT_HASH',
+                                                False)
+hide_filename_annotation = lambda: _env.bool('FIG_TOOLS_HIDE_FILENAME', False)
 
 
 def get_image_path() -> Union[Path, None]:

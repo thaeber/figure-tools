@@ -3,7 +3,7 @@ import datetime
 import subprocess
 import warnings
 from pathlib import Path
-from typing import Dict, Iterable, Union
+from typing import Any, Dict, Iterable, Union
 from operator import itemgetter
 
 import matplotlib
@@ -39,7 +39,7 @@ def save_figure(filename: Union[str, Path],
     })
 
     # add git commit hash as annotation
-    if not cfg.hide_commit_hash_annotation:
+    if not cfg.hide_commit_hash_annotation():
         # get commit hash
         if git_commit is None:
             warnings.warn('Could not obtain commit hash.')
@@ -47,7 +47,7 @@ def save_figure(filename: Union[str, Path],
             _add_commit_hash_annotation(figure, git_commit)
 
     # add filename annotation
-    if not cfg.hide_filename_annotation:
+    if not cfg.hide_filename_annotation():
         _add_filename_annotation(figure, filename)
 
     # target filename
@@ -165,11 +165,11 @@ def _add_annotation(figure: Figure, text: str, loc: str):
             raise ValueError(
                 '"loc" must be one of "upper left" or "upper right"')
 
-    kws = dict(xycoords='axes fraction',
-               textcoords='offset points',
-               fontsize=0.6 * matplotlib.rcParams['font.size'],
-               color=matplotlib.colors.to_rgba('black', 0.5),
-               annotation_clip=False)
+    kws: dict[str, Any] = dict(xycoords='axes fraction',
+                               textcoords='offset points',
+                               fontsize=0.6 * matplotlib.rcParams['font.size'],
+                               color=matplotlib.colors.to_rgba('black', 0.5),
+                               annotation_clip=False)
 
     # position
     if loc == 'upper left':

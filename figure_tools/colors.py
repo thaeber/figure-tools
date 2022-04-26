@@ -28,6 +28,15 @@ LIGHT_TABLEAU_COLORS = OrderedDict(
 # add light tableau colors to the list o named matplotlib colors
 matplotlib.colors._colors_full_map.update(LIGHT_TABLEAU_COLORS)
 
+# Extended tableau colors
+EXTENDED_TABLEAU_COLORS = (
+    ('black', '#000000'),
+    ('light', '#c7c7c7'),
+)
+EXTENDED_TABLEAU_COLORS = OrderedDict(
+    ('tab:' + name, value) for name, value in EXTENDED_TABLEAU_COLORS)
+matplotlib.colors._colors_full_map.update(EXTENDED_TABLEAU_COLORS)
+
 # add tab20 color shades
 TAB20_SHADED_COLORS = (
     ('indigo1', '#393b79'),

@@ -2,6 +2,6 @@ name: figure-tools
 channels:
   - defaults
 dependencies:
-  - python
+  - python=3.9
   - pip
   - poetry

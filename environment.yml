@@ -1,7 +1,6 @@
 name: figure-tools
 channels:
-  - defaults
+  - conda-forge
+  - nodefaults
 dependencies:
-  - python=3.9
-  - pip
-  - poetry
+  - python=3.12

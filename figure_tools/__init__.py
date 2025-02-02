@@ -1,11 +1,15 @@
-# set package version
-__version__ = '0.4.10'
+from . import colors
+from .figure import apply_style, create_figure, validate_size
+from .save import load_image_metadata, print_image_metadata, save_figure
+from .version import __version__
 
-from typing import Union
-from pathlib import Path
-
-import matplotlib.pyplot as plt
-
-from . import colors  # type: ignore
-from .figure import apply_style, create_figure, validate_size  # type: ignore
-from .save import save_figure, load_image_metadata, print_image_metadata
+__all__ = [
+    'apply_style',
+    'create_figure',
+    'validate_size',
+    'load_image_metadata',
+    'print_image_metadata',
+    'save_figure',
+    'colors',
+    '__version__',
+]

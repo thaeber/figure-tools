@@ -12,8 +12,7 @@ def apply_style(*additional_styles):
     """
     Applies a commong style to all figures created after calling this function.
     """
-    plt.style.use(
-        os.path.join(os.path.dirname(__file__), './figure_style.mplstyle'))
+    plt.style.use(os.path.join(os.path.dirname(__file__), './figure_style.mplstyle'))
 
     for style in additional_styles:
         plt.style.use(style)
@@ -27,13 +26,12 @@ def _validate_float(s: Union[str, float]) -> float:
         raise ValueError('Could not convert "%s" to float' % s)
 
 
-def validate_size(default_size: float,
-                  size: Union[float, str] = 'default') -> float:
+def validate_size(default_size: float, size: Union[float, str] = 'default') -> float:
     """Validates and returns the figure size.
 
     ### Args:
 
-    - `default_size` (float): The default size in inch. 
+    - `default_size` (float): The default size in inch.
     - `size` (float, str), optional: A float specifying the absolute size in inch
         or a string value representing the size or size modifier.
         String values can be of the following form:
@@ -78,16 +76,18 @@ def validate_size(default_size: float,
         return _validate_float(size)
 
 
-def create_figure(width: Union[float, str] = 'default',
-                  height: Union[float, str] = 'default',
-                  aspect_ratio: Optional[float] = None,
-                  **fig_kws: Dict[str, Any]) -> Figure:
+def create_figure(
+    width: Union[float, str] = 'default',
+    height: Union[float, str] = 'default',
+    aspect_ratio: Optional[float] = None,
+    **fig_kws: Dict[str, Any],
+) -> Figure:
     """
     Creates a new figure with given size and/or aspect ratio
 
     ### Args:
 
-    - `width` (float or string): 
+    - `width` (float or string):
         Specifies the width of the figure. Defaults to 'default'. Possible values are:
         - `float`: The absolute width in inches.
         - `'default'`: Takes the default width from the rcParams.
@@ -137,7 +137,7 @@ def create_figure(width: Union[float, str] = 'default',
         # aspect ratio is only used if the default height is still set
         actual_height = actual_width * _validate_float(aspect_ratio)
     else:
-        if (aspect_ratio is not None):
+        if aspect_ratio is not None:
             warnings.warn(
                 'Aspect ratio is ignored because a non-default figure height was specified.'
             )

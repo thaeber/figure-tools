@@ -1,4 +1,12 @@
 <!-- insertion marker -->
+<a name="v0.4.12"></a>
+
+## [v0.4.12](https://github.com/thaeber/figure-tools/compare/v0.4.11...v0.4.12) (2025-02-02)
+
+### Bug Fixes
+
+- Failed test of package version ([50512b8](https://github.com/thaeber/figure-tools/commit/50512b8e257a7c4861226fb5c5e00c222855b9b6))
+
 <a name="v0.4.11"></a>
 
 ## [v0.4.11](https://github.com/thaeber/figure-tools/compare/v0.4.10...v0.4.11) (2025-02-02)
@@ -6,6 +14,10 @@
 ### Features
 
 - Updating project dependencies ([38b3d98](https://github.com/thaeber/figure-tools/commit/38b3d98d485dff819d01bd0b935bcd454030b8ea))
+
+### Code Refactoring
+
+- Renamed `tests` folder to `test` ([d59c460](https://github.com/thaeber/figure-tools/commit/d59c4601482f75c1b92f78ea329d5c251c2cc4af))
 
 ### Chore
 

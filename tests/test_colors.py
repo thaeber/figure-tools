@@ -1,9 +1,9 @@
-#%%
+# %%
 import figure_tools  # type: ignore
 import matplotlib.colors
 
 
-#%%
+# %%
 def test_light_tableau_colors():
     assert matplotlib.colors.is_color_like('tab:lightblue')
     assert matplotlib.colors.is_color_like('tab:lightorange')

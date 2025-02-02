@@ -1,8 +1,5 @@
-import os
 from pathlib import Path
 from figure_tools._config import get_image_path, get_workspace_root, get_git_root
-
-import pytest
 
 
 def test_default_image_path():

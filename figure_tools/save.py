@@ -1,4 +1,3 @@
-import os
 import datetime
 import subprocess
 import warnings
@@ -15,12 +14,13 @@ from PIL import Image
 from . import _config as cfg
 
 
-def save_figure(filename: Union[str, Path],
-                figure: Union[Figure, None] = None,
-                formats: Iterable[str] = ('.png', ),
-                index: str = None,
-                **kws):
-
+def save_figure(
+    filename: Union[str, Path],
+    figure: Union[Figure, None] = None,
+    formats: Iterable[str] = ('.png',),
+    index: str = None,
+    **kws,
+):
     # make sure filename is of type Path
     filename = Path(filename).resolve()
 
@@ -31,12 +31,14 @@ def save_figure(filename: Union[str, Path],
     # add git commit hash to figure metadata
     git_commit = _get_git_commit_hash()
     metadata = kws.setdefault('metadata', {})
-    metadata.update({
-        'created': f'{datetime.datetime.now(datetime.timezone.utc)}',
-        'git-commit': f'{git_commit}',
-        'script-filename': filename.name,
-        'git-blame': f'{_get_git_blame(filename)}',
-    })
+    metadata.update(
+        {
+            'created': f'{datetime.datetime.now(datetime.timezone.utc)}',
+            'git-commit': f'{git_commit}',
+            'script-filename': filename.name,
+            'git-blame': f'{_get_git_blame(filename)}',
+        }
+    )
 
     # add git commit hash as annotation
     if not cfg.hide_commit_hash_annotation():
@@ -76,7 +78,6 @@ def save_figure(filename: Union[str, Path],
 
 
 def load_image_metadata(filename: Union[str, Path]) -> Dict[str, str]:
-
     filename = Path(filename)
 
     if filename.suffix == '.py':
@@ -104,7 +105,6 @@ def print_image_metadata(filename):
 
 
 def build_image_path(filename: Union[str, Path]) -> Path:
-
     # make sure filename is of typ Path
     filename = Path(filename)
 
@@ -121,8 +121,7 @@ def build_image_path(filename: Union[str, Path]) -> Path:
         if workspace_root is None:
             return image_path / filename.name
         else:
-            return image_path / filename.resolve().relative_to(
-                workspace_root.resolve())
+            return image_path / filename.resolve().relative_to(workspace_root.resolve())
 
 
 def _add_commit_hash_annotation(figure: Figure, text: str):
@@ -139,37 +138,36 @@ def _add_filename_annotation(figure: Figure, filename: Path):
 
 
 def _add_annotation(figure: Figure, text: str, loc: str):
-
     # get axes
     if len(figure.axes) == 1:
         ax = figure.axes[0]
     else:
         if loc == 'upper left':
             # get upper left axis
-            axes = [(a, a.get_position().xmin, a.get_position().ymax)
-                    for a in figure.axes]
-            axes = sorted(axes, key=itemgetter(2),
-                          reverse=True)  # sort by ymax
+            axes = [
+                (a, a.get_position().xmin, a.get_position().ymax) for a in figure.axes
+            ]
+            axes = sorted(axes, key=itemgetter(2), reverse=True)  # sort by ymax
             axes = sorted(axes, key=itemgetter(1))  # sort by xmin
             ax = axes[0][0]
         elif loc == 'upper right':
             # get upper right axis
-            axes = [(a, a.get_position().xmax, a.get_position().ymax)
-                    for a in figure.axes]
-            axes = sorted(axes, key=itemgetter(2),
-                          reverse=True)  # sort by ymax
-            axes = sorted(axes, key=itemgetter(1),
-                          reverse=True)  # sort by xmax
+            axes = [
+                (a, a.get_position().xmax, a.get_position().ymax) for a in figure.axes
+            ]
+            axes = sorted(axes, key=itemgetter(2), reverse=True)  # sort by ymax
+            axes = sorted(axes, key=itemgetter(1), reverse=True)  # sort by xmax
             ax = axes[0][0]
         else:
-            raise ValueError(
-                '"loc" must be one of "upper left" or "upper right"')
+            raise ValueError('"loc" must be one of "upper left" or "upper right"')
 
-    kws: dict[str, Any] = dict(xycoords='axes fraction',
-                               textcoords='offset points',
-                               fontsize=0.6 * matplotlib.rcParams['font.size'],
-                               color=matplotlib.colors.to_rgba('black', 0.5),
-                               annotation_clip=False)
+    kws: dict[str, Any] = dict(
+        xycoords='axes fraction',
+        textcoords='offset points',
+        fontsize=0.6 * matplotlib.rcParams['font.size'],
+        color=matplotlib.colors.to_rgba('black', 0.5),
+        annotation_clip=False,
+    )
 
     # position
     if loc == 'upper left':
@@ -192,17 +190,18 @@ def _add_annotation(figure: Figure, text: str, loc: str):
 def _get_git_commit_hash() -> Union[str, None]:
     try:
         label = subprocess.check_output(
-            ["git", "describe", "--always", "--dirty"], text=True).strip()
+            ["git", "describe", "--always", "--dirty"], text=True
+        ).strip()
         return str(label)
-    except:
+    except subprocess.CalledProcessError:
         return None
 
 
 def _get_git_blame(filename: Path):
     try:
         label = subprocess.check_output(
-            ["git", "blame", "-M",
-             str(filename.resolve())], text=True)
+            ["git", "blame", "-M", str(filename.resolve())], text=True
+        )
         return str(label)
-    except:
+    except subprocess.CalledProcessError:
         return None

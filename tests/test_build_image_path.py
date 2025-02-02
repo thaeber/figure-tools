@@ -1,8 +1,5 @@
-import os
 from pathlib import Path
 from figure_tools.save import build_image_path
-
-import pytest
 
 
 def test_unmodified_path(monkeypatch):

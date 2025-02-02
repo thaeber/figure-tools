@@ -1,17 +1,14 @@
-import random
-import string
 from pathlib import Path
 
 import matplotlib.pyplot as plt
 import numpy as np
-import pytest
 from figure_tools import create_figure, save_figure, load_image_metadata
 import figure_tools.save as fts
 
 
 def test_save_current_figure(tmp_path: Path, monkeypatch):
     # create test figure
-    fig = create_figure(width='8cm', aspect_ratio=1)
+    create_figure(width='8cm', aspect_ratio=1)
     x = np.linspace(0, 10, 100)
     plt.plot(x, np.sin(x))
     plt.title('test plot')
@@ -29,7 +26,7 @@ def test_save_current_figure(tmp_path: Path, monkeypatch):
 
 def test_save_figure_with_image_path(tmp_path: Path, monkeypatch):
     # create test figure
-    fig = create_figure(width='8cm', aspect_ratio=1)
+    create_figure(width='8cm', aspect_ratio=1)
     x = np.linspace(0, 10, 100)
     plt.plot(x, np.sin(x))
     plt.title('test plot')
@@ -46,10 +43,9 @@ def test_save_figure_with_image_path(tmp_path: Path, monkeypatch):
     assert (image_path / filename.name).with_suffix('.png').exists()
 
 
-def test_save_figure_with_image_path_and_workspace(tmp_path: Path,
-                                                   monkeypatch):
+def test_save_figure_with_image_path_and_workspace(tmp_path: Path, monkeypatch):
     # create test figure
-    fig = create_figure(width='8cm', aspect_ratio=1)
+    create_figure(width='8cm', aspect_ratio=1)
     x = np.linspace(0, 10, 100)
     plt.plot(x, np.sin(x))
     plt.title('test plot')
@@ -62,14 +58,12 @@ def test_save_figure_with_image_path_and_workspace(tmp_path: Path,
     save_figure(filename)  # by default png-files are created
 
     # make sure the file exists
-    assert (tmp_path / 'images/c/d' /
-            filename.name).with_suffix('.png').exists()
+    assert (tmp_path / 'images/c/d' / filename.name).with_suffix('.png').exists()
 
 
 def test_add_commit_metadata(tmp_path: Path, monkeypatch):
-
     # create test figure
-    fig = create_figure(width='8cm', aspect_ratio=1)
+    create_figure(width='8cm', aspect_ratio=1)
     x = np.linspace(0, 10, 100)
     plt.plot(x, np.sin(x))
     plt.title('test plot')

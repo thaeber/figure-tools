@@ -7,9 +7,13 @@ from environs import Env
 _env = Env()
 _env.read_env()
 
-hide_commit_hash_annotation = lambda: _env.bool('FIG_TOOLS_HIDE_COMMIT_HASH',
-                                                False)
-hide_filename_annotation = lambda: _env.bool('FIG_TOOLS_HIDE_FILENAME', False)
+
+def hide_commit_hash_annotation():
+    return _env.bool('FIG_TOOLS_HIDE_COMMIT_HASH', False)
+
+
+def hide_filename_annotation():
+    return _env.bool('FIG_TOOLS_HIDE_FILENAME', False)
 
 
 def get_image_path() -> Union[Path, None]:
@@ -26,9 +30,10 @@ def get_image_path() -> Union[Path, None]:
 def get_git_root() -> Union[Path, None]:
     try:
         label = subprocess.check_output(
-            ["git", "rev-parse", "--show-toplevel"], text=True).strip()
+            ["git", "rev-parse", "--show-toplevel"], text=True
+        ).strip()
         return Path(label)
-    except:
+    except subprocess.CalledProcessError:
         return None
 
 

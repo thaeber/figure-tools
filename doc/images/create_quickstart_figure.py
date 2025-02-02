@@ -1,4 +1,4 @@
-#%%
+# %%
 import numpy as np
 import matplotlib.pyplot as plt
 from figure_tools import apply_style, create_figure, save_figure, print_image_metadata

@@ -67,10 +67,11 @@ def validate_size(default_size: float, size: Union[float, str] = 'default') -> f
                 elif unit == 'inch':
                     return value
                 else:
-                    ValueError(f'Unrecognized unit "{unit}" in "{size}".')
+                    raise ValueError(f'Unrecognized unit "{unit}" in "{size}".')
             else:
                 raise ValueError(
-                    f'"{size}" is not a valid figure size specifications. Valid values are, e.g. "8cm", "80mm", "3inch" or "2x."'
+                    f'"{size}" is not a valid figure size specification. '
+                    'Valid values are, e.g. "8cm", "80mm", "3inch" or "2x."'
                 )
     else:
         return _validate_float(size)
@@ -139,7 +140,8 @@ def create_figure(
     else:
         if aspect_ratio is not None:
             warnings.warn(
-                'Aspect ratio is ignored because a non-default figure height was specified.'
+                'Aspect ratio is ignored because a non-default figure'
+                ' height was specified.'
             )
         actual_height = validate_size(default_height, height)
 

@@ -23,7 +23,8 @@ LIGHT_TABLEAU_COLORS = (
 
 # Normalize name to "tab:<name>" to avoid name collisions.
 LIGHT_TABLEAU_COLORS = OrderedDict(
-    ('tab:light' + name, value) for name, value in LIGHT_TABLEAU_COLORS)
+    ('tab:light' + name, value) for name, value in LIGHT_TABLEAU_COLORS
+)
 
 # add light tableau colors to the list o named matplotlib colors
 matplotlib.colors._colors_full_map.update(LIGHT_TABLEAU_COLORS)
@@ -34,7 +35,8 @@ EXTENDED_TABLEAU_COLORS = (
     ('light', '#c7c7c7'),
 )
 EXTENDED_TABLEAU_COLORS = OrderedDict(
-    ('tab:' + name, value) for name, value in EXTENDED_TABLEAU_COLORS)
+    ('tab:' + name, value) for name, value in EXTENDED_TABLEAU_COLORS
+)
 matplotlib.colors._colors_full_map.update(EXTENDED_TABLEAU_COLORS)
 
 # add tab20 color shades
@@ -83,7 +85,8 @@ TAB20_SHADED_COLORS = (
 
 # Normalize name to "tab:<name>" to avoid name collisions.
 TAB20_SHADED_COLORS = OrderedDict(
-    ('tab20:' + name, value) for name, value in TAB20_SHADED_COLORS)
+    ('tab20:' + name, value) for name, value in TAB20_SHADED_COLORS
+)
 
 # add light tableau colors to the list o named matplotlib colors
 matplotlib.colors._colors_full_map.update(TAB20_SHADED_COLORS)

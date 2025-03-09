@@ -45,7 +45,7 @@ legend.framealpha    : 0.5      ## legend patch transparency
 legend.facecolor     : inherit  ## inherit from axes.facecolor; or color spec
 legend.edgecolor     : None     ## background patch boundary color
 legend.fancybox      : True     ## if True, use a rounded box for the
-                                 # legend background, else a rectangle
+                                # legend background, else a rectangle
 legend.shadow        : False    ## if True, give background a shadow effect
 legend.numpoints     : 1        ## the number of marker points in the legend line
 legend.scatterpoints : 3        ## number of scatter points
@@ -75,7 +75,7 @@ hatch.color     : black
 image.cmap: jet
 
 #### ERRORBAR PLOTS
-errorbar.capsize : 4             ## length of end cap on error bars in pixels
+errorbar.capsize : 1             ## length of end cap on error bars in pixels
 
 # save fig
 savefig.dpi: 600

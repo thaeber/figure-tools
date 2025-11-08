@@ -1,4 +1,16 @@
 <!-- insertion marker -->
+<a name="v0.4.13"></a>
+
+## [v0.4.13](https://github.com/thaeber/figure-tools/compare/v0.4.12...v0.4.13) (2025-11-08)
+
+### Bug Fixes
+
+- Changed default `capsize` for `errorbar` plots ([edda823](https://github.com/thaeber/figure-tools/commit/edda823e581957e80183888122cfa46622028592))
+
+### Features
+
+- Add more and better convenience functions to manipulate colors ([b08a59c](https://github.com/thaeber/figure-tools/commit/b08a59c54df02b331c8b69527f551521363ceab2))
+
 <a name="v0.4.12"></a>
 
 ## [v0.4.12](https://github.com/thaeber/figure-tools/compare/v0.4.11...v0.4.12) (2025-02-02)

@@ -11,5 +11,6 @@ __all__ = [
     'print_image_metadata',
     'save_figure',
     'colors',
+    'labels',
     '__version__',
 ]

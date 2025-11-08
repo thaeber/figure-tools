@@ -7,6 +7,7 @@
 #
 from collections import OrderedDict
 import matplotlib.colors
+from matplotlib.colors import to_rgb
 
 LIGHT_TABLEAU_COLORS = (
     ('blue', '#aec7e8'),
@@ -93,24 +94,47 @@ matplotlib.colors._colors_full_map.update(TAB20_SHADED_COLORS)
 
 
 #
-# Convenience methods for shading or tinting a base color.
+# Convenience methods for changing color appearance.
 #
-def tint(color, factor=0.3, iterations=1):
-    if iterations == 0:
-        return color
-    else:
-        # rgb = np.array(matplotlib.colors.to_rgb(color))
-        # color = rgb + factor * (1 - rgb)
-
-        rgb = matplotlib.colors.to_rgb(color)
-        color = [x + factor * (1 - x) for x in rgb]
-        return tint(color, factor, iterations - 1)
+def _linear_interpolation(v1: float, v2: float, factor: float) -> float:
+    return v1 + ((v2 - v1) * factor)
 
 
-def shade(color, factor=0.7, iterations=1):
-    if iterations == 0:
-        return color
-    else:
-        rgb = matplotlib.colors.to_rgb(color)
-        color = [x * factor for x in rgb]
-        return shade(color, factor, iterations - 1)
+def blend(color1, color2, factor: float = 0.5):
+    r1, g1, b1 = to_rgb(color1)
+    r2, g2, b2 = to_rgb(color2)
+    r_blend = _linear_interpolation(r1, r2, factor)
+    g_blend = _linear_interpolation(g1, g2, factor)
+    b_blend = _linear_interpolation(b1, b2, factor)
+    return (r_blend, g_blend, b_blend)
+
+
+def complement(color):
+    rgb = to_rgb(color)
+    k = sum([max(*rgb), min(*rgb)])
+    r_comp, g_comp, b_comp = [k - v for v in rgb]
+    return (r_comp, g_comp, b_comp)
+
+
+def grayscale(color):
+    r, g, b = to_rgb(color)
+    weighted_average = 0.299 * r + 0.587 * g + 0.114 * b
+    return (weighted_average, weighted_average, weighted_average)
+
+
+def invert(color):
+    rgb = to_rgb(color)
+    r_inv, g_inv, b_inv = [1.0 - v for v in rgb]
+    return (r_inv, g_inv, b_inv)
+
+
+def shade(color, factor: float):
+    return blend(color, 'black', factor)
+
+
+def tint(color, factor: float):
+    return blend(color, 'white', factor)
+
+
+def tone(color, factor: float):
+    return blend(color, 'gray', factor)

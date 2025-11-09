@@ -1,7 +1,15 @@
 <!-- insertion marker -->
-<a name="v0.4.13"></a>
+<a name="v0.4.15"></a>
 
-## [v0.4.13](https://github.com/thaeber/figure-tools/compare/v0.4.12...v0.4.13) (2025-11-08)
+## [v0.4.15](https://github.com/thaeber/figure-tools/compare/v0.4.14...v0.4.15) (2025-11-09)
+
+### Tests
+
+- Skip tests due to spurious tkinter error ([dbb87c0](https://github.com/thaeber/figure-tools/commit/dbb87c010780faadc601cd3572736ffb958544ca))
+
+<a name="v0.4.14"></a>
+
+## [v0.4.14](https://github.com/thaeber/figure-tools/compare/v0.4.12...v0.4.14) (2025-11-08)
 
 ### Bug Fixes
 

@@ -24,9 +24,9 @@ def get_image_path() -> Union[Path, None]:
     elif path is not None:
         return Path(path)
     else:
-        # root = get_git_root()
-        # if root is not None:
-        #     return root / "images"
+        root = get_git_root()
+        if root is not None:
+            return root / 'images'
         return Path('images')
 
 

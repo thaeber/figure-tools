@@ -1,9 +1,12 @@
 from pathlib import Path
-from figure_tools._config import get_image_path, get_workspace_root, get_git_root
+
+from figure_tools._config import get_git_root, get_image_path, get_workspace_root
 
 
 def test_default_image_path():
+    # by default, the image path is below the git root directory
     assert get_image_path() == Path('images')
+    # assert get_image_path() == Path(__file__).parent.parent / 'images'
 
 
 def test_custom_image_path(monkeypatch):

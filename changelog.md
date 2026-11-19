@@ -1,4 +1,5 @@
 <!-- insertion marker -->
+
 <a name="v0.4.15"></a>
 
 ## [v0.4.15](https://github.com/thaeber/figure-tools/compare/v0.4.14...v0.4.15) (2025-11-09)
@@ -94,4 +95,3 @@
 <a name="v0.1.2"></a>
 
 ## [v0.1.2](https://github.com/thaeber/figure-tools/compare/0e89981bd3897f42b6254fec8f4f927665164ecf...v0.1.2) (2020-10-14)
-

@@ -1,7 +1,13 @@
 # %%
-import numpy as np
 import matplotlib.pyplot as plt
-from figure_tools import apply_style, create_figure, save_figure, print_image_metadata
+import numpy as np
+
+from src.figure_tools import (
+    apply_style,
+    create_figure,
+    print_image_metadata,
+    save_figure,
+)
 
 # %%
 apply_style()

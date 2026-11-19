@@ -24,13 +24,16 @@ def get_image_path() -> Union[Path, None]:
     elif path is not None:
         return Path(path)
     else:
+        # root = get_git_root()
+        # if root is not None:
+        #     return root / "images"
         return Path('images')
 
 
 def get_git_root() -> Union[Path, None]:
     try:
         label = subprocess.check_output(
-            ["git", "rev-parse", "--show-toplevel"], text=True
+            ['git', 'rev-parse', '--show-toplevel'], text=True
         ).strip()
         return Path(label)
     except subprocess.CalledProcessError:

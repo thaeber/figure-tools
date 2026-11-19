@@ -1,29 +1,38 @@
-[tool.poetry]
+[project]
 name = "figure-tools"
 version = "0.4.15"
 description = ""
-authors = ["thaeber"]
+authors = [
+    { name = "thaeber", email = "thomas.haeber@kit.edu" }
+]
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "matplotlib>=3.7.2",
+    "environs>=9.5.0",
+    "scipy>=1.13"
+]
 
-[tool.poetry.dependencies]
-python = ">=3.9"
-matplotlib = ">=3.7.2"
-environs = ">=9.5.0"
-scipy = ">=1.13"
-
-[tool.poetry.group.dev.dependencies]
-pytest = ">=7.4"
-black = ">=25.1"
-git-changelog = ">=2.5"
-pre-commit = ">=4.1"
-bump-my-version = ">=0.31"
+[dependency-groups]
+dev = [
+    "bump-my-version>=1.8.1",
+    "git-changelog>=2.11.0",
+    "pre-commit>=4.7.0",
+    "pytest>=9.2.0",
+    "ruff>=0.17.5",
+]
 
 
 [build-system]
-requires = ["poetry-core"]
-build-backend = "poetry.core.masonry.api"
+requires = ["uv_build>=0.10.1,<0.11.0"]
+build-backend = "uv_build"
 
 [tool.black]
 skip-string-normalization = true
+
+[tool.ruff.format]
+# Prefer single quotes over double quotes.
+quote-style = "single"
 
 [tool.bumpversion]
 current_version = "0.4.15"

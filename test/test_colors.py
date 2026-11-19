@@ -1,6 +1,7 @@
 # %%
-import figure_tools  # type: ignore
 import matplotlib.colors
+
+import figure_tools
 
 
 # %%

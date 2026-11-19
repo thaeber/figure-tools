@@ -1,4 +1,4 @@
-![Python build and test](https://github.com/thaeber/figure-tools/workflows/Python%20build%20and%20test/badge.svg?branch=main)
+[![Python build and test](https://github.com/thaeber/figure-tools/actions/workflows/python-build-and-test.yml/badge.svg)](https://github.com/thaeber/figure-tools/actions/workflows/python-build-and-test.yml)
 
 # figure-tools
 

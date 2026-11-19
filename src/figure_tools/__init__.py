@@ -4,13 +4,13 @@ from .save import load_image_metadata, print_image_metadata, save_figure
 from .version import __version__
 
 __all__ = [
+    '__version__',
     'apply_style',
+    'colors',
     'create_figure',
-    'validate_size',
+    'labels',
     'load_image_metadata',
     'print_image_metadata',
     'save_figure',
-    'colors',
-    'labels',
-    '__version__',
+    'validate_size',
 ]

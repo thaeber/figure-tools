@@ -6,6 +6,7 @@
 # For example: plt.plot(x, y, color='tab:lightblue')
 #
 from collections import OrderedDict
+
 import matplotlib.colors
 from matplotlib.colors import to_rgb
 

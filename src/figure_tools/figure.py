@@ -1,7 +1,7 @@
 import os
 import re as regex
-from typing import Union, Tuple, Dict, Any, Optional
 import warnings
+from typing import Any
 
 import matplotlib.colors
 import matplotlib.pyplot as plt
@@ -18,15 +18,15 @@ def apply_style(*additional_styles):
         plt.style.use(style)
 
 
-def _validate_float(s: Union[str, float]) -> float:
+def _validate_float(s: str | float) -> float:
     """convert s to float or raise"""
     try:
         return float(s)
     except ValueError:
-        raise ValueError('Could not convert "%s" to float' % s)
+        raise ValueError(f'Could not convert "{s}" to float')
 
 
-def validate_size(default_size: float, size: Union[float, str] = 'default') -> float:
+def validate_size(default_size: float, size: float | str = 'default') -> float:
     """Validates and returns the figure size.
 
     ### Args:
@@ -53,7 +53,7 @@ def validate_size(default_size: float, size: Union[float, str] = 'default') -> f
         if size == 'default':
             return default_size
         else:
-            pattern = r"^(\d+(?:\.\d+)?|\d*(?:\.\d+))\s*(x|mm|cm|inch)$"
+            pattern = r'^(\d+(?:\.\d+)?|\d*(?:\.\d+))\s*(x|mm|cm|inch)$'
             match = regex.match(pattern, size)
             if match is not None:
                 value = _validate_float(match.group(1))
@@ -78,10 +78,10 @@ def validate_size(default_size: float, size: Union[float, str] = 'default') -> f
 
 
 def create_figure(
-    width: Union[float, str] = 'default',
-    height: Union[float, str] = 'default',
-    aspect_ratio: Optional[float] = None,
-    **fig_kws: Dict[str, Any],
+    width: float | str = 'default',
+    height: float | str = 'default',
+    aspect_ratio: float | None = None,
+    **fig_kws: dict[str, Any],
 ) -> Figure:
     """
     Creates a new figure with given size and/or aspect ratio
@@ -127,7 +127,7 @@ def create_figure(
     """
 
     # get default width and height from rcParams
-    default_sizes: Tuple[float, float] = matplotlib.rcParams['figure.figsize']
+    default_sizes: tuple[float, float] = matplotlib.rcParams['figure.figsize']
     default_width, default_height = default_sizes
 
     # calculate actual figure width

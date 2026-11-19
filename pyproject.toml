@@ -34,6 +34,9 @@ skip-string-normalization = true
 # Prefer single quotes over double quotes.
 quote-style = "single"
 
+[tool.ruff.lint]
+ignore = ["C408"]
+
 [tool.bumpversion]
 current_version = "0.4.15"
 parse = "(?P<major>\\d+)\\.(?P<minor>\\d+)\\.(?P<patch>\\d+)"

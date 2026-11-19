@@ -1,9 +1,10 @@
 import datetime
 import subprocess
 import warnings
-from pathlib import Path
-from typing import Any, Dict, Iterable, Union
+from collections.abc import Iterable
 from operator import itemgetter
+from pathlib import Path
+from typing import Any
 
 import matplotlib
 import matplotlib.colors
@@ -15,10 +16,10 @@ from . import _config as cfg
 
 
 def save_figure(
-    filename: Union[str, Path],
-    figure: Union[Figure, None] = None,
+    filename: str | Path,
+    figure: Figure | None = None,
     formats: Iterable[str] = ('.png',),
-    index: str = None,
+    index: str | None = None,
     **kws,
 ):
     # make sure filename is of type Path
@@ -33,7 +34,7 @@ def save_figure(
     metadata = kws.setdefault('metadata', {})
     metadata.update(
         {
-            'created': f'{datetime.datetime.now(datetime.timezone.utc)}',
+            'created': f'{datetime.datetime.now(datetime.UTC)}',
             'git-commit': f'{git_commit}',
             'script-filename': filename.name,
             'git-blame': f'{_get_git_blame(filename)}',
@@ -77,7 +78,7 @@ def save_figure(
         figure.savefig(target, **kws)
 
 
-def load_image_metadata(filename: Union[str, Path]) -> Dict[str, str]:
+def load_image_metadata(filename: str | Path) -> dict[str, str]:
     filename = Path(filename)
 
     if filename.suffix == '.py':
@@ -90,7 +91,7 @@ def load_image_metadata(filename: Union[str, Path]) -> Dict[str, str]:
 def print_image_metadata(filename):
     info = load_image_metadata(filename)
     fmt = '{0:>16} {1}'
-    for key in info.keys():
+    for key in info:
         if key in ['created', 'git-commit', 'script-filename']:
             print(fmt.format(key + ':', info[key]))
         elif key == 'git-blame':
@@ -104,7 +105,7 @@ def print_image_metadata(filename):
             print(fmt.format(key + ':', info[key]))
 
 
-def build_image_path(filename: Union[str, Path]) -> Path:
+def build_image_path(filename: str | Path) -> Path:
     # make sure filename is of typ Path
     filename = Path(filename)
 
@@ -187,10 +188,10 @@ def _add_annotation(figure: Figure, text: str, loc: str):
     ax.annotate(text, xy, **kws)
 
 
-def _get_git_commit_hash() -> Union[str, None]:
+def _get_git_commit_hash() -> str | None:
     try:
         label = subprocess.check_output(
-            ["git", "describe", "--always", "--dirty"], text=True
+            ['git', 'describe', '--always', '--dirty'], text=True
         ).strip()
         return str(label)
     except subprocess.CalledProcessError:
@@ -200,7 +201,7 @@ def _get_git_commit_hash() -> Union[str, None]:
 def _get_git_blame(filename: Path):
     try:
         label = subprocess.check_output(
-            ["git", "blame", "-M", str(filename.resolve())], text=True
+            ['git', 'blame', '-M', str(filename.resolve())], text=True
         )
         return str(label)
     except subprocess.CalledProcessError:

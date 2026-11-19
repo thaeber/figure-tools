@@ -30,12 +30,11 @@ from typing import Literal
 
 import matplotlib as mpl
 import matplotlib.pyplot as plt
+import numpy as np
+import scipy.optimize
 from matplotlib.axes import Axes
 from matplotlib.lines import Line2D
-import numpy as np
 from numpy.typing import ArrayLike
-
-import scipy.optimize
 
 
 def _move_min_distance(targets: ArrayLike, min_distance: float) -> np.ndarray:

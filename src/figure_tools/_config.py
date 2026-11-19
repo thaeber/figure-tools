@@ -1,7 +1,7 @@
 import os
-from pathlib import Path
 import subprocess
-from typing import Union
+from pathlib import Path
+
 from environs import Env
 
 _env = Env()
@@ -16,7 +16,7 @@ def hide_filename_annotation():
     return _env.bool('FIG_TOOLS_HIDE_FILENAME', False)
 
 
-def get_image_path() -> Union[Path, None]:
+def get_image_path() -> Path | None:
     # check for environment variable
     path = os.getenv('FIG_TOOLS_IMAGE_PATH')
     if path == '':
@@ -30,7 +30,7 @@ def get_image_path() -> Union[Path, None]:
         return Path('images')
 
 
-def get_git_root() -> Union[Path, None]:
+def get_git_root() -> Path | None:
     try:
         label = subprocess.check_output(
             ['git', 'rev-parse', '--show-toplevel'], text=True
@@ -40,7 +40,7 @@ def get_git_root() -> Union[Path, None]:
         return None
 
 
-def get_workspace_root() -> Union[Path, None]:
+def get_workspace_root() -> Path | None:
     # check for environment variable
     env_path = os.getenv('FIG_TOOLS_WORKSPACE_ROOT')
     if env_path == '':

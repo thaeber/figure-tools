@@ -1,4 +1,19 @@
 <!-- insertion marker -->
+<a name="v0.5.0"></a>
+
+## [v0.5.0](https://github.com/thaeber/figure-tools/compare/v0.4.15...v0.5.0) (2026-11-19)
+
+### Features
+
+- Use git repository root as default workspace path and `git_root/images` for images ([457ccd7](https://github.com/thaeber/figure-tools/commit/457ccd7c7a5adea147a1642f7d212b5830af439d))
+
+### Code Refactoring
+
+- Switch to `uv` as dependency manager ([8162e46](https://github.com/thaeber/figure-tools/commit/8162e46d2f7312044ef1a0dc0327a8a88d80686d))
+
+### Chore
+
+- `pre-commit run -all` ([a35ad4e](https://github.com/thaeber/figure-tools/commit/a35ad4e9858f9149151698d123967b73f9b7d91b))
 
 <a name="v0.4.15"></a>
 
